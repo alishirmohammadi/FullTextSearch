@@ -2,6 +2,7 @@ package ir.mohaymen.textsearch;
 
 import ir.mohaymen.textsearch.components.Preprocessor;
 import ir.mohaymen.textsearch.models.Document;
+import ir.mohaymen.textsearch.repository.DocumentRepository;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -25,6 +26,9 @@ public class CommandProcessor {
     @Autowired
     private Preprocessor preprocessor;
 
+    @Autowired
+    private DocumentRepository documentRepository;
+
     private String getCommand() {
         System.out.print("> ");
         return scanner.nextLine().trim();
@@ -42,8 +46,16 @@ public class CommandProcessor {
                     String title = resource.getFile().getName();
                     String content = Files.readString(resource.getFile().toPath());
                     Document document = new Document(title, content);
-                    List<String> tokens = preprocessor.tokenize(document);
+                    documentRepository.save(document);
                 }
+                System.out.println("document saving completed!");
+            } else if (command.matches("get\\s+\\d+")) {
+                Document document = documentRepository.findById(
+                        Integer.parseInt(
+                                command.replaceAll("[^0-9]", "")
+                        )
+                );
+                System.out.println(document);
             }
         }
     }

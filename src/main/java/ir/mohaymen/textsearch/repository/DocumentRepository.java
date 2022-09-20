@@ -1,11 +1,13 @@
 package ir.mohaymen.textsearch.repository;
 
 import ir.mohaymen.textsearch.models.Document;
+import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 
+@org.springframework.stereotype.Repository
 public class DocumentRepository implements Repository<Document> {
-    private HashMap<Integer, Document> documents;
+    private final HashMap<Integer, Document> documents = new HashMap<>();
 
     @Override
     public Document findById(int id) {

@@ -13,5 +13,13 @@ public class Document implements Model {
     public int getId() {
         return Integer.parseInt(title);
     }
+
+    @Override
+    public String toString() {
+        return "Document{" +
+                "title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                '}';
+    }
 }
 
