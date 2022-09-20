@@ -1,14 +1,18 @@
 package ir.mohaymen.textsearch;
 
+import ir.mohaymen.textsearch.components.Preprocessor;
+import ir.mohaymen.textsearch.models.Document;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
+import redis.clients.jedis.Jedis;
 
 import java.nio.file.Files;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 @Component
@@ -17,6 +21,9 @@ public class CommandProcessor {
 
     @Autowired
     private ApplicationContext applicationContext;
+
+    @Autowired
+    private Preprocessor preprocessor;
 
     private String getCommand() {
         System.out.print("> ");
@@ -32,9 +39,10 @@ public class CommandProcessor {
                 Resource[] resources = applicationContext.getResources("file:/A:/EnglishData/*");
                 for (Resource resource :
                         resources) {
-                    String documentName = resource.getFile().getName();
+                    String title = resource.getFile().getName();
                     String content = Files.readString(resource.getFile().toPath());
-
+                    Document document = new Document(title, content);
+                    List<String> tokens = preprocessor.tokenize(document);
                 }
             }
         }
