@@ -10,7 +10,7 @@ public class TextSearchApplication {
 
     public static void main(String[] args) {
         ConfigurableApplicationContext context = SpringApplication.run(TextSearchApplication.class, args);
-        CommandController processor = context.getBean(CommandController.class);
-        processor.start();
+        CommandController commandController = context.getBean(CommandController.class);
+        commandController.start();
     }
 }

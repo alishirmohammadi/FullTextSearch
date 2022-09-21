@@ -1,10 +1,10 @@
 package ir.mohaymen.textsearch.repository;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
-@Component
+@Repository
 public class IndexRepository {
     private final Map<String, HashSet<Integer>> index = new HashMap<>();
 

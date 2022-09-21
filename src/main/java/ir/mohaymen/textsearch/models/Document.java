@@ -5,11 +5,10 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class Document implements Model {
+public class Document {
     private String title;
     private String content;
 
-    @Override
     public int getId() {
         return Integer.parseInt(title);
     }
@@ -22,4 +21,3 @@ public class Document implements Model {
                 '}';
     }
 }
-
