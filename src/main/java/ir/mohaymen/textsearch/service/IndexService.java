@@ -10,6 +10,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.nio.file.Files;
 import java.util.List;
 
@@ -42,6 +43,7 @@ public class IndexService {
     }
 
     @SneakyThrows
+    @PostConstruct
     public void initialize() {
         Resource[] resources = applicationContext.getResources(documentsLocation);
         for (Resource resource :

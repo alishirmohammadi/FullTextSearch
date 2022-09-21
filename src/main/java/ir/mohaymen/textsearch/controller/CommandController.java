@@ -2,7 +2,6 @@ package ir.mohaymen.textsearch.controller;
 
 import ir.mohaymen.textsearch.models.Document;
 import ir.mohaymen.textsearch.repository.DocumentRepository;
-import ir.mohaymen.textsearch.service.IndexService;
 import ir.mohaymen.textsearch.service.SearchService;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +17,6 @@ public class CommandController {
     private final Scanner scanner = new Scanner(System.in);
 
     @Autowired
-    private IndexService indexService;
-    @Autowired
     private SearchService searchService;
 
     @Autowired
@@ -34,9 +31,7 @@ public class CommandController {
     public void start() {
         while (true) {
             String command = getCommand();
-            if (command.matches("index")) {
-                indexService.initialize();
-            } else if (command.matches("get\\s+\\d+")) {
+            if (command.matches("get\\s+\\d+")) {
                 Document document = documentRepository.findById(
                         Integer.parseInt(
                                 command.replaceAll("[^0-9]", "")
