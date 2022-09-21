@@ -5,6 +5,7 @@ import ir.mohaymen.textsearch.repository.DocumentRepository;
 import ir.mohaymen.textsearch.repository.IndexRepository;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,9 @@ public class IndexService {
     @Autowired
     private ApplicationContext applicationContext;
 
+    @Value("${documents.location}")
+    private String documentsLocation;
+
     private List<String> tokenize(Document document) {
         String content = document.getContent().toLowerCase();
         return List.of(content.split("\\s|\\.|!|,|\"|\\?|\\)|\\(|-|~|<|>|\\\\|/|\\{|}|\\||@"));
@@ -39,7 +43,7 @@ public class IndexService {
 
     @SneakyThrows
     public void initialize() {
-        Resource[] resources = applicationContext.getResources("file:/A:/EnglishData/*");
+        Resource[] resources = applicationContext.getResources(documentsLocation);
         for (Resource resource :
                 resources) {
             String title = resource.getFile().getName();
