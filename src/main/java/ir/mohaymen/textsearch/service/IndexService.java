@@ -3,13 +3,11 @@ package ir.mohaymen.textsearch.service;
 import ir.mohaymen.textsearch.models.Document;
 import ir.mohaymen.textsearch.repository.IndexRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@EnableScheduling
 public class IndexService {
 
     @Autowired
