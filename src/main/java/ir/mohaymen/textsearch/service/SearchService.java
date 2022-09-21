@@ -4,6 +4,7 @@ import ir.mohaymen.textsearch.repository.IndexRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -25,5 +26,22 @@ public class SearchService {
         and.stream().map(word -> indexRepository.getDocumentsContainingToken(word)).forEach(documentIds::retainAll);
         not.stream().map(word -> indexRepository.getDocumentsContainingToken(word)).forEach(documentIds::removeAll);
         return documentIds;
+    }
+
+    public Set<Integer> searchByQuery(String query) {
+        List<String> or = new ArrayList<>();
+        List<String> and = new ArrayList<>();
+        List<String> not = new ArrayList<>();
+        String[] phrase = query.split("\\s+");
+        for (String s : phrase) {
+            if (s.startsWith("+")) {
+                and.add(s.substring(1));
+            } else if (s.startsWith("-")) {
+                not.add(s.substring(1));
+            } else {
+                or.add(s);
+            }
+        }
+        return advancedSearch(or, and, not);
     }
 }
